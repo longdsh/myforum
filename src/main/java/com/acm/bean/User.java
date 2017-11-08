@@ -5,5 +5,5 @@ package com.acm.bean;
 * 类说明
 */
 public class User {
-
+ 
 }
