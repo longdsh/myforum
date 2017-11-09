@@ -25,5 +25,6 @@
 		
 		
 		<!-- <mapping resource="com/acm/bean/Department.hbm.xml"/>  -->
+		<mapping resource="com/acm/bean/User.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>
