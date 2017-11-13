@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
 import com.acm.bean.User;
+import com.acm.dao.BaseDao;
 import com.acm.dao.impl.UserDaoImpl;
 import com.acm.service.UserService;
 
@@ -18,13 +19,16 @@ import com.acm.service.UserService;
 @Service
 public class UserServiceImpl implements UserService{
 
+	
 	@Resource
-	UserDaoImpl UserDaoImpl;
+	UserDaoImpl userDaoImpl;
 	@Override
-	public void add() {
+	public void findAll() {
 		// TODO Auto-generated method stub
 		User user = new User();
-		UserDaoImpl.save(user);
+		//UserDaoImpl.save(user);
+		userDaoImpl.findAll();
+		
 	}
    
 	

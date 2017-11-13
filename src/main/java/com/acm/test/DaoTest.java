@@ -26,7 +26,7 @@ public class DaoTest {
 	@Test
 	public void test() {
 		//fail("Not yet implemented");
-		UserServiceImpl.add();
+		UserServiceImpl.findAll();
 	}
 
 }

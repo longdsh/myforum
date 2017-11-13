@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-11-13 18:07:15 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+   <class name="com.acm.bean.Reply" table="REPLY">
+   
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="title"/>
+		<property name="content" type="text" length="50000"/>
+		<property name="postTime" type="timestamp"/>
+		<property name="floor" type="int"/>
+		<!-- author属性，本类与User的多对一 -->
+		<many-to-one name="auther" class="com.acm.bean.User" column="authorId"></many-to-one>
+		
+		<!-- topic属性，本类与Topic的多对一 -->		
+		<many-to-one name="topic" class="com.acm.bean.Topic" column="topicId"></many-to-one>
+		
+
+    </class>
+</hibernate-mapping>

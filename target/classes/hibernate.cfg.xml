@@ -26,5 +26,9 @@
 		
 		<!-- <mapping resource="com/acm/bean/Department.hbm.xml"/>  -->
 		<mapping resource="com/acm/bean/User.hbm.xml"/>
+		<mapping resource="com/acm/bean/Topic.hbm.xml"/>
+		<mapping resource="com/acm/bean/Role.hbm.xml"/>
+		<mapping resource="com/acm/bean/Reply.hbm.xml"/>
+		<mapping resource="com/acm/bean/Forum.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>

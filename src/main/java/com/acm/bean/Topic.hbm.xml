@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-11-13 18:00:35 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.acm.bean.Topic" table="Topic">
+   
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="native" />
+        </id>
+        <property name="title"/>
+		<property name="content" type="text" length="50000"/>
+		<property name="postTime" type="timestamp"/>
+		
+		<property name="lastUpDateTime" type="timestamp"/>
+		
+		<property name="type" type="int"/>
+		
+		<!-- author属性，本类与User的多对一 -->
+		<many-to-one name="auther" class="com.acm.bean.User" column="authorId"></many-to-one>
+		
+		<!-- 对应板块 -->
+		<many-to-one name="forum" class="com.acm.bean.Forum" column="forumId"></many-to-one>
+		
+		
+		
+		<!-- 贴子内多个回复 -->
+		<set name="replys" table="REPLY">
+		    <key>
+		      <column name="topicId"></column>
+		    </key>
+		    <one-to-many class="com.acm.bean.Reply"/>
+		</set>
+		
+		
+		
+
+    </class>
+</hibernate-mapping>
