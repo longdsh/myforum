@@ -6,7 +6,21 @@ $(function() {
 
 	$("#headImageButton").click(function() {
 
+		var headImage = $("#headImage").val();
+	    var headImageIndex = headImage.substr(headImage.lastIndexOf( ".")).toUpperCase();
+	    //alert(headImageIndex)
+	    if(headImageIndex!=".JPG"&&headImageIndex!=".PNG"){
+	    	alert("只能上传.jpg .png");
+	    	return false;
+	    }
+	    var headImageSize = $("#headImage")[0].files[0].size;
+	    //alert(headImageSize)
+		if(headImageSize>1048576){
+			alert("文件需小于1M");
+	    	return false;
+		}
 		
+		$("#shangchuan").text("上传中勿操作----")
 		
 		$("#headImageForm").ajaxSubmit({
 			type: "POST",
@@ -17,8 +31,9 @@ $(function() {
 		    		//alert(data.extend.path);
 			     	//alert(data.extend.webPath);
 			     	$("#showHeadImage").attr("src",data.extend.webPath);
+			     	$("#shangchuan").text("上传完成")
 		    	}else{
-		    		alert("只上传.jpg .png");
+		    		alert("只能上传.jpg .png且文件小于1M");
 		    	}
 		     	
 			}

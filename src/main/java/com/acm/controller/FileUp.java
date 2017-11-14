@@ -26,8 +26,14 @@ public class FileUp {
 
 	@ResponseBody
 	@RequestMapping("/upHeadImage")
-	public Message upHeadImage(HttpServletRequest request, MultipartFile headImage)
-			throws IllegalStateException, IOException {
+	public Message upHeadImage(HttpServletRequest request, MultipartFile headImage) throws IllegalStateException, IOException
+			{
+		
+		long size = headImage.getSize();
+		System.out.println(size);
+		if(size>(1*1024*1024)) {
+			return Message.fail();
+		}
 		//System.out.println(headImage);
 		System.out.println("fileName：" + headImage.getOriginalFilename());
 		String fileName = headImage.getOriginalFilename();
@@ -53,7 +59,9 @@ public class FileUp {
 		//System.out.println("路径：" + path);
 		File newFile = new File(path);
 		// 通过CommonsMultipartFile的方法直接写文件（注意这个时候）
-		headImage.transferTo(newFile);
+		
+			headImage.transferTo(newFile);
+		
 		 
 		//设置回显路径
 		String webPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
