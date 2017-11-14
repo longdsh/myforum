@@ -20,6 +20,7 @@ $(function() {
 	    	return false;
 		}
 		
+		
 		$("#shangchuan").text("上传中勿操作----")
 		
 		$("#headImageForm").ajaxSubmit({
@@ -31,7 +32,7 @@ $(function() {
 		    		//alert(data.extend.path);
 			     	//alert(data.extend.webPath);
 			     	$("#showHeadImage").attr("src",data.extend.webPath);
-			     	$("#shangchuan").text("上传完成")
+			     	$("#shangchuan").text("上传完成稍等图片回显")
 		    	}else{
 		    		alert("只能上传.jpg .png且文件小于1M");
 		    	}

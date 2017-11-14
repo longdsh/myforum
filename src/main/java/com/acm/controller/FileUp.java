@@ -34,7 +34,9 @@ public class FileUp {
 		if(size>(1*1024*1024)) {
 			return Message.fail();
 		}
-		//System.out.println(headImage);
+		
+		
+		//后缀判断
 		System.out.println("fileName：" + headImage.getOriginalFilename());
 		String fileName = headImage.getOriginalFilename();
 		String index = fileName.substring(fileName.lastIndexOf("."));
@@ -47,28 +49,27 @@ public class FileUp {
 		fileName = new Date().getTime()+index;
 		// String path="E:/"+new Date().getTime()+file.getOriginalFilename();
 		
+		//文件路径
 		String path = request.getServletContext().getRealPath("/userHeadImage/");
-
-
 		File file = new File(path);
 		if(!file.exists()) {
 			file.mkdirs();
 		}
-		
 		path = path + "/" + fileName;//保存路径
 		//System.out.println("路径：" + path);
 		File newFile = new File(path);
 		// 通过CommonsMultipartFile的方法直接写文件（注意这个时候）
-		
-			headImage.transferTo(newFile);
+		headImage.transferTo(newFile);
 		
 		 
-		//设置回显路径
-		String webPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-		+request.getContextPath();
-		//System.out.println(webPath);
+		//设置回显路径 
+		/*String webPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+		+request.getContextPath();*/
+			
+		//相对项目目录路径回显  此路径存数据库
+		String  webPath =request.getContextPath();
 		webPath = webPath + "/userHeadImage/"+fileName;
-		//System.out.println(webPath);
+		System.out.println(webPath);
 
 		return Message.success().add("path", path).add("webPath", webPath);
 	}
