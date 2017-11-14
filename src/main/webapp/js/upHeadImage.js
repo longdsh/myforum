@@ -4,23 +4,30 @@
 
 $(function() {
 
-	$("#headImage").click(function(){
+	$("#headImageButton").click(function() {
+
 		
-		$.ajax({
-			type : "post",
-			url : getRootPath() + "/admin/f5All",
-			data : {},
-			success : function(result) {
-				
+		
+		$("#headImageForm").ajaxSubmit({
+			type: "POST",
+			url:getRootPath()+"/fileUp/upHeadImage",
+			dataType: "json",
+		    success: function(data){
+		    	if(data.code==100){
+		    		//alert(data.extend.path);
+			     	//alert(data.extend.webPath);
+			     	$("#showHeadImage").attr("src",data.extend.webPath);
+		    	}else{
+		    		alert("只上传.jpg .png");
+		    	}
+		     	
 			}
 		});
 
-})
+	})
 });
 
-
-
-//得到绝对路径
+// 得到绝对路径
 function getRootPath() {
 	// 获取当前网址，如： http://localhost:9527/zdss-web/login/login.do
 	var curWwwPath = window.document.location.href;
@@ -44,4 +51,3 @@ function getRootPath() {
 	console.log(localhostPath + projectName);
 	return localhostPath + projectName;
 }
-	

@@ -2,6 +2,7 @@ package com.acm.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,32 +26,42 @@ public class FileUp {
 
 	@ResponseBody
 	@RequestMapping("/upHeadImage")
-	public Message upHeadImage(HttpServletRequest request) throws IllegalStateException, IOException {
-		long startTime = System.currentTimeMillis();
-		String path = null;
-		// 将当前上下文初始化给 CommonsMutipartResolver （多部分解析器）
-		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
-				request.getSession().getServletContext());
-		// 检查form中是否有enctype="multipart/form-data"
-		if (multipartResolver.isMultipart(request)) {
-			// 将request变成多部分request
-			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
-			// 获取multiRequest 中所有的文件名
-
-			MultipartFile file = multiRequest.getFile("headImage");
-
-			// String path="E:/springUpload"+file.getOriginalFilename();
-			String realPath = request.getSession().getServletContext().getRealPath("/WEB-INF/userFile/");
-			// 上传
-			path = realPath + file.getOriginalFilename();
-			System.out.println(path);
-			file.transferTo(new File(path));
-
-			long endTime = System.currentTimeMillis();
-			System.out.println("方法三的运行时间：" + String.valueOf(endTime - startTime) + "ms");
-
-			
+	public Message upHeadImage(HttpServletRequest request, MultipartFile headImage)
+			throws IllegalStateException, IOException {
+		//System.out.println(headImage);
+		System.out.println("fileName：" + headImage.getOriginalFilename());
+		String fileName = headImage.getOriginalFilename();
+		String index = fileName.substring(fileName.lastIndexOf("."));
+		System.out.println("后缀："+index);
+		if(!index.equals(".jpg")&&!index.equals(".png")) {
+			return Message.fail();
 		}
-		return Message.success().add("path", path);
+		
+		//修改fileName 
+		fileName = new Date().getTime()+index;
+		// String path="E:/"+new Date().getTime()+file.getOriginalFilename();
+		
+		String path = request.getServletContext().getRealPath("/userHeadImage/");
+
+
+		File file = new File(path);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		
+		path = path + "/" + fileName;//保存路径
+		//System.out.println("路径：" + path);
+		File newFile = new File(path);
+		// 通过CommonsMultipartFile的方法直接写文件（注意这个时候）
+		headImage.transferTo(newFile);
+		 
+		//设置回显路径
+		String webPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+		+request.getContextPath();
+		//System.out.println(webPath);
+		webPath = webPath + "/userHeadImage/"+fileName;
+		//System.out.println(webPath);
+
+		return Message.success().add("path", path).add("webPath", webPath);
 	}
 }
